@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.TestMapper">
+    <resultMap id="testMap" type="com.example.springboot.entity.Test">
+        <result property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="testDate" column="test_date" />
+        <result property="state" column="state" />
+        <collection property="questionList" javaType="ArrayList" ofType="com.example.springboot.entity.Question">
+            <result column="q_id" property="id" />
+            <result column="q_content" property="content" />
+        </collection>
+    </resultMap>
+
+    <select id="findPage" resultMap="testMap">
+        SELECT `test`.* ,question.id as q_id, question.content as q_content from`test`
+        left join question on test.id = question.quiz_id
+    </select>
+</mapper>

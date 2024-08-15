@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.UserMapper">
+    <resultMap id="userMap" type="com.example.springboot.entity.User">
+        <result property="id" column="id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="phone" column="phone" />
+        <result property="address" column="address" />
+        <result property="role" column="role" />
+        <collection property="animalList" javaType="ArrayList" ofType="com.example.springboot.entity.Animal">
+            <result column="a_id" property="id" />
+            <result column="a_name" property="name" />
+            <result column="a_species" property="species" />
+        </collection>
+    </resultMap>
+
+    <select id="findPage" resultMap="userMap">
+        SELECT `user`.* ,animal.id as a_id, animal.name as a_name,animal.species as a_species from`user`
+        left join animal on user.id = animal.keeper_id
+    </select>
+</mapper>
